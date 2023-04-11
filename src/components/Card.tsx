@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, {FC} from "react";
 
 interface Product {
   name: string;
@@ -16,7 +16,7 @@ type Props = {
   product: Product;
 };
 
-export default function Card({ product }: Props) {
+const Card: FC<Props> = ({ product }: Props) => {
   return (
     <div className="m-4 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
       <div className="md:flex">
@@ -48,3 +48,4 @@ export default function Card({ product }: Props) {
   );
 }
 
+export default Card;

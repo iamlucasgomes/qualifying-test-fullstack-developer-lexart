@@ -6,12 +6,19 @@ interface Props {
 
   const SearchBar: FC<Props> = ({ categories }) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState<string>('Todas');
-    const [selectedPlatform, setSelectedPlatform] = useState<string>('Mercado Livre');
+    const [selectedCategory, setSelectedCategory] = useState<string>('Categorias');
+    const [selectedPlatform, setSelectedPlatform] = useState<string>('Todas');
   
     const handleSearch = useCallback(() => {
-      // Implementation of search logic here
+        console.log('teste')
     }, []);
+
+    const categoryOptions = categories.length > 0 ? categories.reduce((uniqueValues: string[], currentValue: string) => {
+      if (!uniqueValues.includes(currentValue)) {
+          uniqueValues.push(currentValue);
+      }
+      return uniqueValues;
+  }, []) : [] as string[];
   
     return (
       <div className="flex justify-center p-4">
@@ -30,7 +37,7 @@ interface Props {
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
-          {categories.map((category) => (
+          {categoryOptions.map((category) => (
             <option key={category} value={category}>
               {category}
             </option>

@@ -22,7 +22,7 @@ export default function Home() {
     category: 'Running',
     image: 'https://static.netshoes.com.br/produtos/tenisultraboost-22-w-adidas/06/3ZP-5581-006/3ZP-5581-006_zoom1.jpg',
     description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum',
-    price: 1.199,
+    price: 1199.90,
     link: 'https://www.netshoes.com.br/tenis-ultraboost-22-w-adidas-preto-3ZP-5581-006',
   }
 ]
