@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-type Product = {
+interface Product {
   name: string;
   category: string;
   image: string;
@@ -18,7 +18,7 @@ type Props = {
 
 export default function Card({ product }: Props) {
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div className="m-4 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
       <div className="md:flex">
         <div className="md:flex-shrink-0">
           <Image
@@ -30,20 +30,17 @@ export default function Card({ product }: Props) {
           />
         </div>
         <div className="p-8">
-          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-            {product.category}
-          </div>
-          <Link href={`/products/${product.id}`}>
-            <a className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
-              {product.name}
-            </a>
-          </Link>
+          <title
+            className="block mt-1 text-lg leading-tight font-medium text-black">
+            {product.name}
+          </title>
           <p className="mt-2 text-gray-500">{product.description}</p>
           <p className="mt-2 text-gray-500">${product.price.toFixed(2)}</p>
-          <Link href={product.link}>
-            <a className="mt-5 inline-block px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600">
-              Ir a web
-            </a>
+          <Link
+            href={product.link}
+            target="_blank"
+            className="mt-5 inline-block px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600">
+              Ir a web  
           </Link>
         </div>
       </div>
