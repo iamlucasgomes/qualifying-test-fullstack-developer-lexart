@@ -1,28 +1,53 @@
 import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-export default function Card() {
+type Product = {
+  name: string;
+  category: string;
+  image: string;
+  description: string;
+  price: number;
+  id: number;
+  link: string;
+};
+
+type Props = {
+  product: Product;
+};
+
+export default function Card({ product }: Props) {
   return (
-    <div className="max-w-sm w-full lg:max-w-full lg:flex">
-  <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={{ backgroundImage: "url('/img/card-left.jpg')" }} title="Woman holding a mug">
-  </div>
-  <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-    <div className="mb-8">
-      <p className="text-sm text-gray-600 flex items-center">
-        <svg className="fill-current text-gray-500 w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-          <path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />
-        </svg>
-        Members only
-      </p>
-      <div className="text-gray-900 font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-      <p className="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-    </div>
-    <div className="flex items-center">
-      <div className="text-sm">
-        <p className="text-gray-900 leading-none">Jonathan Reinink</p>
-        <p className="text-gray-600">Aug 18</p>
+    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+      <div className="md:flex">
+        <div className="md:flex-shrink-0">
+          <Image
+            className="h-48 w-full object-cover md:w-48"
+            width={415}
+            height={397}
+            src={product.image}
+            alt={product.name}
+          />
+        </div>
+        <div className="p-8">
+          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+            {product.category}
+          </div>
+          <Link href={`/products/${product.id}`}>
+            <a className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
+              {product.name}
+            </a>
+          </Link>
+          <p className="mt-2 text-gray-500">{product.description}</p>
+          <p className="mt-2 text-gray-500">${product.price.toFixed(2)}</p>
+          <Link href={product.link}>
+            <a className="mt-5 inline-block px-4 py-2 leading-none border rounded text-white bg-indigo-500 hover:bg-indigo-600">
+              Ir a web
+            </a>
+          </Link>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-  )
+  );
 }
+
