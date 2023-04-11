@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Card from '@/components/Card'
+import SearchBar from '@/components/SearchBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,8 +27,11 @@ export default function Home() {
   }
 ]
 
+const categories = teste.map(({category}) => category);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <SearchBar categories={categories}/>
       {teste.map((product) => <Card key={product.id} product={product} />)}
     </main>
   )
