@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useContext } from 'react';
 import { useAppContext } from '@/context/hook';
+import { requestCategories } from '@/services/api';
 interface Props {
   categories: string[];
 };
@@ -20,13 +21,6 @@ const SearchBar: FC<Props> = ({ categories }) => {
       )
   }, []);
 
-  const categoryOptions = categories.length > 0 ? categories.reduce((uniqueValues: string[], currentValue: string) => {
-    if (!uniqueValues.includes(currentValue)) {
-      uniqueValues.push(currentValue);
-    }
-    return uniqueValues;
-  }, []) : [] as string[];
-
   return (
     <div className="flex justify-center p-4">
       <select
@@ -44,7 +38,7 @@ const SearchBar: FC<Props> = ({ categories }) => {
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}
       >
-        {categoryOptions.map((category) => (
+        {categories.map((category) => (
           <option key={category} value={category}>
             {category}
           </option>

@@ -1,11 +1,13 @@
 import Card from '@/components/Card'
 import SearchBar from '@/components/SearchBar'
 import { useAppContext } from '@/context/hook';
-import { useEffect } from 'react';
+import { requestCategories } from '@/services/api';
+import { useEffect, useCallback, useState } from 'react';
 
 export default function Main() {
 
   const {setSelectedCategory} = useAppContext()
+  const [categories, setCategories] = useState<string[]>([]);
 
   const teste = [{
     id: 1,
@@ -27,11 +29,18 @@ export default function Main() {
   }
 ]
 
-const categories = teste.map(({category}) => category);
- 
+const categoryOptions = useCallback(async (): Promise<void> => {
+  const cat = await requestCategories();
+  setCategories(cat);
+}, []);
+
+useEffect(() => {
+  categoryOptions()
+},[categoryOptions])
+
 useEffect(() => {
   setSelectedCategory(categories[0])
-},[categories, setSelectedCategory])
+},[ categories, setSelectedCategory])
 
   return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
