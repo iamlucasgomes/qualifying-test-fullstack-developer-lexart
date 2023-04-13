@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 interface Product {
   title: string;
@@ -13,14 +13,18 @@ function parseMercadoLivre(html: string, category: string): Product[] {
   const $ = cheerio.load(html);
   const products: Product[] = [];
 
-  $('li.search-results__item > div > div > div.ui-search-result__content-wrapper').each((_, element) => {
-    try {
-      const title = $(element).find('h2 > a').text();
-      const priceText = $(element).find('span.price-tag-fraction').text();
-      const price = parseFloat(priceText.replace('.', '').replace(',', '.'));
-      const description = $(element).find('div.ui-search-item__group__element.ui-search-item__description > p').text() || '';
-      const image = $(element).find('img.ui-search-layout__image').attr('src') || '';
+  $('#root-app > div > div.ui-search-main.ui-search-main--only-products.ui-search-main--with-topkeywords.shops__search-main > section > ol >').each((_, element) => {
+    const titleElem = $(element).find('h2.ui-search-item__title');
+    const priceTextElem = $(element).find('span.price-tag-fraction').first();
+    const descriptionElem = $(element).find('div.ui-search-item__group__element.ui-search-item__description > p');
+    const imageElem = $(element).find('img.ui-search-result-image__element');
 
+    try {
+      const title = titleElem.text();
+      const price = parseFloat(priceTextElem.text().replace(/\.|,/g, match => match === '.' ? '' : '.'));
+      const description = descriptionElem.text() || '';
+      const image = imageElem.attr('src') || '';
+      console.log(price);
       products.push({ title, price, description, image, category });
     } catch (error) {
       console.error('Error parsing product:', error);
@@ -51,7 +55,8 @@ function parseBuscape(html: string, category: string): Product[] {
   return products;
 }
 
-async function searchProducts(searchTerm: string, category: string, web: string): Promise<Product[]> {
+export default async function searchProducts(searchTerm: string, category: string, web: string): Promise<Product[]> {
+
   let mercadoLivreUrl = `https://lista.mercadolivre.com.br/${searchTerm}`;
   let buscapeUrl = `https://www.buscape.com.br/search?q=${searchTerm}`;
 
