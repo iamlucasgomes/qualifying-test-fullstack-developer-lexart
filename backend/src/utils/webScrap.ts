@@ -27,7 +27,7 @@ function parseMercadoLivre(html: string, category: string): Product[] {
       const description = descriptionElem.text() || '';
       const image = imageElem.attr('data-src') || '';
       const link = linkElem.attr('href') || '';
-      
+
       products.push({ title, price, description, image, category, link });
     } catch (error) {
       console.error('Error parsing product:', error);
@@ -40,19 +40,34 @@ function parseMercadoLivre(html: string, category: string): Product[] {
 function parseBuscape(html: string, category: string): Product[] {
   const $ = cheerio.load(html);
   const products: Product[] = [];
+  const web: string = 'https://www.buscape.com.br';
 
-  $('article.card-product').each((_, element) => {
+  $('#__next > div.Content_Container__heIrp.container-lg > div > div.col-lg-9 > div.Hits_Wrapper__3q_7P > div.Paper_Paper__HIHv0.Paper_Paper__bordered__iuU_5.Card_Card__LsorJ.Card_Card__clicable__5y__P.SearchCard_ProductCard__1D3ve').each((_, element) => {
+    const titleElem = $(element).find('h2.SearchCard_ProductCard_Name__ZaO5o');
+    const priceTextElem = $(element).find('p.Text_Text__h_AF6.Text_MobileHeadingS__Zxam2');
+    const descriptionElem = $(element).find(' div > a > div.SearchCard_ProductCard_Body__2wM_H > div.Space_Space__43IaB.Space_Space__small__w35wB.Space_Space__vertical__4PBHk.SearchCard_ProductCard_Description__fGXI3 > div > p.Text_Text__h_AF6.Text_MobileLabelXs__ER_cD.Text_MobileLabelSAtLarge__YdYbv.SearchCard_ProductCard_Installment__tFssR');
+    const imageElem = $(element).find('div.SearchCard_ProductCard_Image__ffKkn > span > img');
+    const linkElem = $(element).find('a.SearchCard_ProductCard_Inner__7JhKb');
+
     try {
-      const title = $(element).find('div.product-info > a.product-title').text();
-      const priceText = $(element).find('span.mainValue').text();
-      const price = parseFloat(priceText.replace('.', '').replace(',', '.'));
-      const description = $(element).find('div.product-description').text() || '';
-      const image = $(element).find('img.product-image').attr('src') || '';
+      const title = titleElem.text();
+      const price = parseFloat(priceTextElem.text().replace(/^R\$\s*/, '').replace('.', ''));
+      const description = descriptionElem.text() || '';
+      const image = imageElem.attr('src') || '';
+      let linkWeb = linkElem.attr('href') || '';
+      let link: string;
+      
+      if (!linkWeb.includes(web)) {
+        link = `${web}${linkWeb}`
+        products.push({ title, price, description, image, category, link });
+        return;
+      } else {
+        link = linkWeb
+        products.push({ title, price, description, image, category, link });
+        return;
+      }
 
-      products.push({
-        title, price, description, image, category,
-        link: ''
-      });
+
     } catch (error) {
       console.error('Error parsing product:', error);
     }
@@ -66,7 +81,7 @@ export default async function searchProducts(searchTerm: string, category: strin
   let mercadoLivreUrl = `https://lista.mercadolivre.com.br/${searchTerm}`;
   let buscapeUrl = `https://www.buscape.com.br/search?q=${searchTerm}`;
 
-  if(category){
+  if (category) {
     mercadoLivreUrl = `https://lista.mercadolivre.com.br/${category}/${searchTerm}`;
     buscapeUrl = `https://www.buscape.com.br/${category}/${searchTerm}`;
   }
@@ -79,12 +94,12 @@ export default async function searchProducts(searchTerm: string, category: strin
 
   const mercadoLivreProducts = parseMercadoLivre(mercadoLivreResponse.data, category);
   const buscapeProducts = parseBuscape(buscapeResponse.data, category);
-  
-  if(web === 'Mercado Livre') {
+
+  if (web === 'Mercado Livre') {
     return [...mercadoLivreProducts]
   }
-  
-  if(web === 'Buscapé'){
+
+  if (web === 'Buscapé') {
     return [...buscapeProducts]
   }
 
