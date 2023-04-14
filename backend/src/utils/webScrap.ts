@@ -56,7 +56,7 @@ function parseBuscape(html: string, category: string): Product[] {
       const image = imageElem.attr('src') || '';
       let linkWeb = linkElem.attr('href') || '';
       let link: string;
-      
+
       if (!linkWeb.includes(web)) {
         link = `${web}${linkWeb}`
         products.push({ title, price, description, image, category, link });
@@ -66,7 +66,6 @@ function parseBuscape(html: string, category: string): Product[] {
         products.push({ title, price, description, image, category, link });
         return;
       }
-
 
     } catch (error) {
       console.error('Error parsing product:', error);
@@ -78,14 +77,10 @@ function parseBuscape(html: string, category: string): Product[] {
 
 export default async function searchProducts(searchTerm: string, category: string, web: string): Promise<Product[]> {
 
-  let mercadoLivreUrl = `https://lista.mercadolivre.com.br/${searchTerm}`;
-  let buscapeUrl = `https://www.buscape.com.br/search?q=${searchTerm}`;
-
-  if (category) {
-    mercadoLivreUrl = `https://lista.mercadolivre.com.br/${category}/${searchTerm}`;
-    buscapeUrl = `https://www.buscape.com.br/${category}/${searchTerm}`;
-  }
-
+  const mercadoLivreUrl = category ? `https://lista.mercadolivre.com.br/${category}/${searchTerm}`
+    : `https://lista.mercadolivre.com.br/${searchTerm}`;
+  const buscapeUrl = category ? `https://www.buscape.com.br/${category}/${searchTerm}`
+    : `https://www.buscape.com.br/search?q=${searchTerm}`;
 
   const [mercadoLivreResponse, buscapeResponse] = await Promise.all([
     axios.get(mercadoLivreUrl),

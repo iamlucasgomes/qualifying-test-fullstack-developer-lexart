@@ -1,41 +1,36 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, {FC} from "react";
+import Product from "@/interfaces/Product.interface";
 
-interface Product {
-  name: string;
-  category: string;
-  image: string;
-  description: string;
-  price: number;
-  id: number;
-  link: string;
-};
 
-type Props = {
+interface Props {
   product: Product;
 };
 
 const Card: FC<Props> = ({ product }: Props) => {
+
+const options = { style: 'currency', currency: 'BRL' };
+
   return (
-    <div className="m-4 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div className="w-full m-4 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
       <div className="md:flex">
         <div className="md:flex-shrink-0">
           <Image
-            className="h-48 w-full object-cover md:w-48"
-            width={415}
-            height={397}
+            className="w-full h-48 object-cover"
+            width={400}
+            height={380}
             src={product.image}
-            alt={product.name}
+            alt={product.title}
           />
         </div>
         <div className="p-8">
           <title
             className="block mt-1 text-lg leading-tight font-medium text-black">
-            {product.name}
+            {product.title}
           </title>
           <p className="mt-2 text-gray-500">{product.description}</p>
-          <p className="mt-2 text-gray-500">${product.price.toFixed(2)}</p>
+          <p className="mt-2 text-gray-500">{product.price.toLocaleString('pt-BR', options)}</p>
           <Link
             href={product.link}
             target="_blank"

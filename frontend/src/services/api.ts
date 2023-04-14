@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'https://api.mercadolibre.com/sites/MLB/',
+const webScrap = axios.create({
+  baseURL: 'http://localhost:3001/',
 });
 
-export const requestCategories = async () => {
-  const { data } = await api.get('/categories');
-  const response = data.map(({name}: {name: string}) => name);
-  return response;
+export const requestWebScrap = async (searchTerm: string, category: string, web: string) => {
+  const dataset = { searchTerm, category, web};
+  const { data } = await webScrap.post('/webscrap', dataset)
+  console.log(data);
+  return data;
 };
-

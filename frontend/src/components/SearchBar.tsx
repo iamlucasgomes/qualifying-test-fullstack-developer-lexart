@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useContext } from 'react';
 import { useAppContext } from '@/context/hook';
-import { requestCategories } from '@/services/api';
+import { requestWebScrap } from '@/services/api';
 interface Props {
   categories: string[];
 };
@@ -13,13 +13,15 @@ const SearchBar: FC<Props> = ({ categories }) => {
     selectedPlatform,
     setSelectedPlatform,
     selectedCategory,
-    setSelectedCategory
+    setSelectedCategory,
+    setProducts
   } = useAppContext();
 
-  const handleSearch = useCallback(() => {
-    console.log('oskei, estou multiplicaido'
-      )
-  }, []);
+  const handleSearch = useCallback( async () => {
+  setProducts([]);
+  const response =  await requestWebScrap(searchTerm, selectedCategory.toLowerCase(), selectedPlatform)
+  setProducts(response)
+  }, [searchTerm, selectedCategory, selectedPlatform, setProducts]);
 
   return (
     <div className="flex justify-center p-4">
@@ -36,7 +38,7 @@ const SearchBar: FC<Props> = ({ categories }) => {
       <select
         className="bg-gray-200 rounded-md py-2 px-4 mr-2 text-black"
         value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
+        onChange={(e) => setSelectedCategory((e.target.value))}
       >
         {categories.map((category) => (
           <option key={category} value={category}>
