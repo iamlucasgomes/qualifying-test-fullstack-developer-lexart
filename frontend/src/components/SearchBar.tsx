@@ -14,11 +14,11 @@ const SearchBar: FC<Props> = ({ categories }) => {
     setSelectedPlatform,
     selectedCategory,
     setSelectedCategory,
-    setProducts
+    setProducts,
+    setHaveProducts
   } = useAppContext();
 
   const handleSearch = useCallback( async () => {
-  setProducts([]);
   const response =  await requestWebScrap(
     searchTerm.normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -31,7 +31,8 @@ const SearchBar: FC<Props> = ({ categories }) => {
     selectedPlatform
     )
   setProducts(response)
-  }, [searchTerm, selectedCategory, selectedPlatform, setProducts]);
+  setHaveProducts(true);
+  }, [searchTerm, selectedCategory, selectedPlatform, setHaveProducts, setProducts]);
 
   return (
     <div className="flex justify-center p-4">

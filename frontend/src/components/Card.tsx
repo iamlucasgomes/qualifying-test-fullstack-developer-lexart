@@ -17,7 +17,7 @@ const options = { style: 'currency', currency: 'BRL' };
       <div className="md:flex">
         <div className="p-3 md:flex-shrink-0">
           <Image
-            className="w-full h-48 object-cover"
+            className="w-48 h-48 object-contain"
             width={400}
             height={380}
             src={product.image}

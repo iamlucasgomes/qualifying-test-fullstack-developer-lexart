@@ -15,14 +15,12 @@ function parseMercadoLivre(html: string, category: string): Product[] {
 
   const $ = cheerio.load(html);
   const products: Product[] = [];
-
   $('#root-app > div > div.ui-search-main.ui-search-main--only-products.ui-search-main--with-topkeywords.shops__search-main > section > ol >').each((_, element) => {
     const titleElem = $(element).find('h2.ui-search-item__title');
     const priceTextElem = $(element).find('span.price-tag-fraction').first();
     const descriptionElem = $(element).find('span.ui-search-item__variations-text');
     const imageElem = $(element).find('img.ui-search-result-image__element');
     const linkElem = $(element).find('a.ui-search-link');
-    const metaSiteName = $('meta[property="og:site_name"]');
 
     try {
       const title = titleElem.text();
@@ -42,11 +40,11 @@ function parseMercadoLivre(html: string, category: string): Product[] {
 }
 
 function parseBuscape(html: string, category: string): Product[] {
-  
+    
   const $ = cheerio.load(html);
   const products: Product[] = [];
   const web: string = 'https://www.buscape.com.br';
-
+  
   $('#__next > div.Content_Container__heIrp.container-lg > div > div.col-lg-9 > div.Hits_Wrapper__3q_7P > div.Paper_Paper__HIHv0.Paper_Paper__bordered__iuU_5.Card_Card__LsorJ.Card_Card__clicable__5y__P.SearchCard_ProductCard__1D3ve').each((_, element) => {
     const titleElem = $(element).find('h2.SearchCard_ProductCard_Name__ZaO5o');
     const priceTextElem = $(element).find('p.Text_Text__h_AF6.Text_MobileHeadingS__Zxam2');
@@ -90,16 +88,16 @@ export default async function searchProducts(searchTerm: string, category: strin
     : `https://www.buscape.com.br/search?q=${searchTerm}`;
   let buscapeProducts: Product[] = [];
   let mercadoLivreProducts: Product[] = [];
-  
+
   const [] = await Promise.all([
-    axios.get(mercadoLivreUrl) .then(response => {
+    axios.get(mercadoLivreUrl).then(response => {
       mercadoLivreProducts = parseMercadoLivre(response.data, category);
     })
     .catch(error => {
       console.log('Error: ' + error.message);
     }),
 
-    axios.get(buscapeUrl) .then(response => {
+    axios.get(buscapeUrl).then(response => {
       buscapeProducts = parseBuscape(response.data, category);
     })
     .catch(error => {
