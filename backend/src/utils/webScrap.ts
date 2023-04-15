@@ -8,9 +8,11 @@ interface Product {
   image: string;
   category: string;
   link: string;
+  meta: string;
 }
 
 function parseMercadoLivre(html: string, category: string): Product[] {
+
   const $ = cheerio.load(html);
   const products: Product[] = [];
 
@@ -20,6 +22,7 @@ function parseMercadoLivre(html: string, category: string): Product[] {
     const descriptionElem = $(element).find('span.ui-search-item__variations-text');
     const imageElem = $(element).find('img.ui-search-result-image__element');
     const linkElem = $(element).find('a.ui-search-link');
+    const metaSiteName = $('meta[property="og:site_name"]');
 
     try {
       const title = titleElem.text();
@@ -27,8 +30,9 @@ function parseMercadoLivre(html: string, category: string): Product[] {
       const description = descriptionElem.text() || '';
       const image = imageElem.attr('data-src') || '';
       const link = linkElem.attr('href') || '';
+      const meta = 'Mercado Livre';
 
-      products.push({ title, price, description, image, category, link });
+      products.push({ title, price, description, image, category, link, meta });
     } catch (error) {
       console.error('Error parsing product:', error);
     }
@@ -38,6 +42,7 @@ function parseMercadoLivre(html: string, category: string): Product[] {
 }
 
 function parseBuscape(html: string, category: string): Product[] {
+  
   const $ = cheerio.load(html);
   const products: Product[] = [];
   const web: string = 'https://www.buscape.com.br';
@@ -48,6 +53,7 @@ function parseBuscape(html: string, category: string): Product[] {
     const descriptionElem = $(element).find(' div > a > div.SearchCard_ProductCard_Body__2wM_H > div.Space_Space__43IaB.Space_Space__small__w35wB.Space_Space__vertical__4PBHk.SearchCard_ProductCard_Description__fGXI3 > div > p.Text_Text__h_AF6.Text_MobileLabelXs__ER_cD.Text_MobileLabelSAtLarge__YdYbv.SearchCard_ProductCard_Installment__tFssR');
     const imageElem = $(element).find('div.SearchCard_ProductCard_Image__ffKkn > span > img');
     const linkElem = $(element).find('a.SearchCard_ProductCard_Inner__7JhKb');
+    const metaSiteName = $('meta[property="og:site_name"]');
 
     try {
       const title = titleElem.text();
@@ -55,15 +61,16 @@ function parseBuscape(html: string, category: string): Product[] {
       const description = descriptionElem.text() || '';
       const image = imageElem.attr('src') || '';
       let linkWeb = linkElem.attr('href') || '';
+      const meta = metaSiteName.attr('content') || '';
       let link: string;
 
       if (!linkWeb.includes(web)) {
         link = `${web}${linkWeb}`
-        products.push({ title, price, description, image, category, link });
+        products.push({ title, price, description, image, category, link, meta });
         return;
       } else {
         link = linkWeb
-        products.push({ title, price, description, image, category, link });
+        products.push({ title, price, description, image, category, link, meta });
         return;
       }
 
@@ -81,14 +88,24 @@ export default async function searchProducts(searchTerm: string, category: strin
     : `https://lista.mercadolivre.com.br/${searchTerm}`;
   const buscapeUrl = category ? `https://www.buscape.com.br/${category}/${searchTerm}`
     : `https://www.buscape.com.br/search?q=${searchTerm}`;
+  let buscapeProducts: Product[] = [];
+  let mercadoLivreProducts: Product[] = [];
+  
+  const [] = await Promise.all([
+    axios.get(mercadoLivreUrl) .then(response => {
+      mercadoLivreProducts = parseMercadoLivre(response.data, category);
+    })
+    .catch(error => {
+      console.log('Error: ' + error.message);
+    }),
 
-  const [mercadoLivreResponse, buscapeResponse] = await Promise.all([
-    axios.get(mercadoLivreUrl),
-    axios.get(buscapeUrl),
+    axios.get(buscapeUrl) .then(response => {
+      buscapeProducts = parseBuscape(response.data, category);
+    })
+    .catch(error => {
+      console.log('Error: ' + error.message);
+    }),
   ]);
-
-  const mercadoLivreProducts = parseMercadoLivre(mercadoLivreResponse.data, category);
-  const buscapeProducts = parseBuscape(buscapeResponse.data, category);
 
   if (web === 'Mercado Livre') {
     return [...mercadoLivreProducts]

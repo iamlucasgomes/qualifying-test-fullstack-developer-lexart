@@ -19,7 +19,17 @@ const SearchBar: FC<Props> = ({ categories }) => {
 
   const handleSearch = useCallback( async () => {
   setProducts([]);
-  const response =  await requestWebScrap(searchTerm, selectedCategory.toLowerCase(), selectedPlatform)
+  const response =  await requestWebScrap(
+    searchTerm.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s/g, '-')
+    .toLowerCase(),
+    selectedCategory.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s/g, '-')
+    .toLowerCase(),
+    selectedPlatform
+    )
   setProducts(response)
   }, [searchTerm, selectedCategory, selectedPlatform, setProducts]);
 

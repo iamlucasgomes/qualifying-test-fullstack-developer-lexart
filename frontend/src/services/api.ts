@@ -7,6 +7,5 @@ const webScrap = axios.create({
 export const requestWebScrap = async (searchTerm: string, category: string, web: string) => {
   const dataset = { searchTerm, category, web};
   const { data } = await webScrap.post('/webscrap', dataset)
-  console.log(data);
   return data;
 };

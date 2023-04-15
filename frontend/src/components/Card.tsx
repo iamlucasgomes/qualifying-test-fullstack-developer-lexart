@@ -13,9 +13,9 @@ const Card: FC<Props> = ({ product }: Props) => {
 const options = { style: 'currency', currency: 'BRL' };
 
   return (
-    <div className="w-full m-4 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div className="w-full h-38 m-4 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
       <div className="md:flex">
-        <div className="md:flex-shrink-0">
+        <div className="p-3 md:flex-shrink-0">
           <Image
             className="w-full h-48 object-cover"
             width={400}
@@ -29,6 +29,7 @@ const options = { style: 'currency', currency: 'BRL' };
             className="block mt-1 text-lg leading-tight font-medium text-black">
             {product.title}
           </title>
+          <p className="mt-2 text-gray-500">{product.meta}</p>
           <p className="mt-2 text-gray-500">{product.description}</p>
           <p className="mt-2 text-gray-500">{product.price.toLocaleString('pt-BR', options)}</p>
           <Link

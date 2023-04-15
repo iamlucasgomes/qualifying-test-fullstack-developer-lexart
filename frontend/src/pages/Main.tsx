@@ -16,16 +16,16 @@ export default function Main() {
 
 
 
-const categories = useMemo(() => ['Celular', 'Geladeira'], []);
+const categories = useMemo(() => ['Celular', 'Geladeira', 'Frigobar','TV', 'Notebook', 'Lavadora', 'Ar-Condicionado', 'Fogão', 'Tablet', 'Microondas', 'Forno', 'Console', 'Monitor', 'Impressora', 'Tênis', 'Cafeteira', 'Livros', 'Panela', 'Caixa de Som'], []);
 
 useEffect(() => {
   setSelectedCategory(categories[0].toLowerCase())
 },[ categories, setSelectedCategory])
-
+  console.log(products);
   return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <SearchBar categories={categories}/>
-        {products.map((product) => <Card key={product.title} product={product} />)}
+        {products.map((product, i) => <Card key={`${product.title}:${i}`} product={product} />)}
       </main>
   )
 }
