@@ -5,5 +5,5 @@ export default interface Product {
   image: string;
   category: string;
   link: string;
-  meta: string;
+  platform: string;
 }

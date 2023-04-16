@@ -29,7 +29,7 @@ const options = { style: 'currency', currency: 'BRL' };
             className="block mt-1 text-lg leading-tight font-medium text-black">
             {product.title}
           </title>
-          <p className="mt-2 text-gray-500">{product.meta}</p>
+          <p className="mt-2 text-gray-500">{product.platform}</p>
           <p className="mt-2 text-gray-500">{product.description}</p>
           <p className="mt-2 text-gray-500">{product.price.toLocaleString('pt-BR', options)}</p>
           <Link
