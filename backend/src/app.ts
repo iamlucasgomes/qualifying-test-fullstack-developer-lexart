@@ -1,5 +1,5 @@
 import * as express from 'express';
-import webScrapRouter from './router/webScrap.router';
+import Routes from './router/Routes';
 import * as cors from 'cors'
 class App {
   public app: express.Express;
@@ -23,7 +23,7 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
     this.app.use(cors())
-    this.app.use('/webscrap', webScrapRouter)
+    this.app.use('/webscrap', Routes)
   }
 
   public start(PORT: string | number): void {

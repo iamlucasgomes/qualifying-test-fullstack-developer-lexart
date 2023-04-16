@@ -36,11 +36,11 @@ function parseMercadoLivre(html: string, category: string): Product[] {
 }
 
 function parseBuscape(html: string, category: string): Product[] {
-    
+
   const $ = cheerio.load(html);
   const products: Product[] = [];
   const web: string = 'https://www.buscape.com.br';
-  
+
   $('#__next > div.Content_Container__heIrp.container-lg > div > div.col-lg-9 > div.Hits_Wrapper__3q_7P > div.Paper_Paper__HIHv0.Paper_Paper__bordered__iuU_5.Card_Card__LsorJ.Card_Card__clicable__5y__P.SearchCard_ProductCard__1D3ve').each((_, element) => {
     const titleElem = $(element).find('h2.SearchCard_ProductCard_Name__ZaO5o');
     const priceTextElem = $(element).find('p.Text_Text__h_AF6.Text_MobileHeadingS__Zxam2');
@@ -89,25 +89,17 @@ export default async function searchProducts(searchTerm: string, category: strin
     axios.get(mercadoLivreUrl).then(response => {
       mercadoLivreProducts = parseMercadoLivre(response.data, category);
     })
-    .catch(error => {
-      console.log('Error: ' + error.message);
-    }),
+      .catch(error => {
+        console.log('Error: ' + error.message);
+      }),
 
     axios.get(buscapeUrl).then(response => {
       buscapeProducts = parseBuscape(response.data, category);
     })
-    .catch(error => {
-      console.log('Error: ' + error.message);
-    }),
+      .catch(error => {
+        console.log('Error: ' + error.message);
+      }),
   ]);
 
-  if (web === 'Mercado Livre') {
-    return [...mercadoLivreProducts]
-  }
-
-  if (web === 'Buscapé') {
-    return [...buscapeProducts]
-  }
-
-  return [...mercadoLivreProducts, ...buscapeProducts];
+return (web === 'Mercado Livre') ? [...mercadoLivreProducts] : [...buscapeProducts]
 }

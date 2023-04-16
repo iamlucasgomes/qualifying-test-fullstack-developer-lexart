@@ -3,10 +3,22 @@ import RequestScrap from '../database/models/RequestScraps';
 import Adverts from '../database/models/Adverts';
 import IWebScrap from '../interface/IWebScrap';
 import IAdvert from '../interface/IAdvert';
+import IGetAllScraps from '../interface/IGetAllScraps';
 
 export default class RequestScrapService {
   protected requestScrapModel: ModelStatic<RequestScrap> = RequestScrap;
   protected advertModel: ModelStatic<Adverts> = Adverts;
+
+
+  public async getAllScraps(request: IGetAllScraps) {
+    const { searchTerm, category } = request;
+    const result = await this.requestScrapModel.findAll({ 
+      where: { searchTerm, category },
+      include: [
+      { model: Adverts, attributes: { exclude: ['id', 'requestId'] } },
+    ], });
+    return result.map((item) => item.dataValues.adverts);
+  }
 
   private async getScraps(request: IWebScrap): Promise<RequestScrap | null> {
     const { searchTerm, category, platform } = request;
