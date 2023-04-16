@@ -11,13 +11,9 @@ export default function Main() {
   const lexartLogo = 'lex-white.svg';
   const lexart = 'lexart-logo';
   const categories = useMemo(() => [
-    'Celular', 'Geladeira', 'Frigobar',
-    'TV', 'Notebook', 'Lavadora',
-    'Ar-Condicionado', 'Fogão',
-    'Tablet', 'Microondas',
-    'Forno', 'Console', 'Monitor',
-    'Impressora', 'Tênis', 'Cafeteira',
-    'Livros', 'Panela', 'Caixa de Som'
+    'Celular',
+    'Geladeira',
+    'TV',
   ], []);
 
   useEffect(() => {
