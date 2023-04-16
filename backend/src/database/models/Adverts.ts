@@ -1,6 +1,6 @@
 import { Model, INTEGER, STRING } from 'sequelize';
 import db from '.';
-import RequestScrap from './RequestScrap';
+import RequestScrap from './RequestScraps';
 
 class Adverts extends Model {
   declare id: number;
@@ -41,14 +41,13 @@ Adverts.init({
     type: STRING,
   }
 }, {
-  underscored: true,
   sequelize: db,
   modelName: 'adverts',
   timestamps: false,
 });
 
-Adverts.belongsTo(RequestScrap, { foreignKey: 'requestId', as: 'requestId' });
-RequestScrap.hasOne(Adverts, { foreignKey: 'RequestId', as: 'RequestId' });
+Adverts.belongsTo(RequestScrap, { foreignKey: 'requestId' });
+RequestScrap.hasOne(Adverts, { foreignKey: 'RequestId' });
 
 
 export default Adverts;

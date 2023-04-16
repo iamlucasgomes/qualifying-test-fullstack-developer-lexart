@@ -1,13 +1,9 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import IAdvert from '../interface/IAdvert';
 
-interface Product {
-  title: string;
-  price: number;
-  description: string;
-  image: string;
+interface Product extends IAdvert {
   category: string;
-  link: string;
   meta: string;
 }
 

@@ -28,9 +28,8 @@ RequestScrap.init({
     type: STRING,
   }
 }, {
-  underscored: true,
   sequelize: db,
-  modelName: 'requestScrap',
+  modelName: 'requestScraps',
   timestamps: false,
 });
 

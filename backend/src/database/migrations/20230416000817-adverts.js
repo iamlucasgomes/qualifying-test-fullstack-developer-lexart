@@ -14,9 +14,9 @@ module.exports = {
         allowNull: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        field: 'request_id',
+        field: 'requestId',
         references: {
-          model: 'requestScrap',
+          model: 'requestScraps',
           key: 'id',
         }
       },
