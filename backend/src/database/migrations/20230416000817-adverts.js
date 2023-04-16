@@ -39,6 +39,10 @@ module.exports = {
       link: {
         type: Sequelize.TEXT,
         allowNull: false,
+      },
+      platform: {
+        type: Sequelize.TEXT,
+        allowNull: false
       }
       });
   },

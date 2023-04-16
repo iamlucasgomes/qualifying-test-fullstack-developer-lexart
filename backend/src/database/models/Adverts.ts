@@ -39,6 +39,10 @@ Adverts.init({
   link: {
     allowNull: false,
     type: STRING,
+  },
+  platform: {
+    allowNull: false,
+    type: STRING,
   }
 }, {
   sequelize: db,
@@ -46,8 +50,9 @@ Adverts.init({
   timestamps: false,
 });
 
-Adverts.belongsTo(RequestScrap, { foreignKey: 'requestId' });
-RequestScrap.hasOne(Adverts, { foreignKey: 'RequestId' });
+Adverts.belongsTo(RequestScrap, { foreignKey: 'requestId', targetKey: 'id' });
+RequestScrap.hasMany(Adverts, { foreignKey: 'requestId', sourceKey: 'id' });
+
 
 
 export default Adverts;

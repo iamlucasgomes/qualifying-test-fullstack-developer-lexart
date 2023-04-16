@@ -6,4 +6,5 @@ export default interface IAdvert {
   description: string;
   image: string;
   link: string;
+  platform: string;
 }

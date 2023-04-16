@@ -4,7 +4,7 @@ import IAdvert from '../interface/IAdvert';
 
 interface Product extends IAdvert {
   category: string;
-  meta: string;
+  platform: string;
 }
 
 function parseMercadoLivre(html: string, category: string): Product[] {
@@ -24,9 +24,9 @@ function parseMercadoLivre(html: string, category: string): Product[] {
       const description = descriptionElem.text() || '';
       const image = imageElem.attr('data-src') || '';
       const link = linkElem.attr('href') || '';
-      const meta = 'Mercado Livre';
+      const platform = 'Mercado Livre';
 
-      products.push({ title, price, description, image, category, link, meta });
+      products.push({ title, price, description, image, category, link, platform });
     } catch (error) {
       console.error('Error parsing product:', error);
     }
@@ -55,16 +55,16 @@ function parseBuscape(html: string, category: string): Product[] {
       const description = descriptionElem.text() || '';
       const image = imageElem.attr('src') || '';
       let linkWeb = linkElem.attr('href') || '';
-      const meta = metaSiteName.attr('content') || '';
+      const platform = metaSiteName.attr('content') || '';
       let link: string;
 
       if (!linkWeb.includes(web)) {
         link = `${web}${linkWeb}`
-        products.push({ title, price, description, image, category, link, meta });
+        products.push({ title, price, description, image, category, link, platform });
         return;
       } else {
         link = linkWeb
-        products.push({ title, price, description, image, category, link, meta });
+        products.push({ title, price, description, image, category, link, platform });
         return;
       }
 
