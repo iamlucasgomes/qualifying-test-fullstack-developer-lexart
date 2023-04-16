@@ -6,7 +6,7 @@ const router = Router();
 router.post('/',
 (req, res, next) => new WebScrapController(req, res, next).getWebScrap());
 
-router.get('/',
+router.post('/all',
 (req, res, next) => new WebScrapController(req, res, next).getAllWebScrap());
 
 export default router;

@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useContext } from 'react';
 import { useAppContext } from '@/context/hook';
-import { requestWebScrap } from '@/services/api';
+import { requestAllPlatforms, requestWebScrap } from '@/services/api';
 interface Props {
   categories: string[];
 };
@@ -19,16 +19,32 @@ const SearchBar: FC<Props> = ({ categories }) => {
   } = useAppContext();
 
   const handleSearch = useCallback( async () => {
+
+    if(selectedPlatform === 'Todas') {
+      const response = await requestAllPlatforms(
+      searchTerm.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s/g, '-')
+        .toLowerCase(),
+      selectedCategory.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s/g, '-')
+        .toLowerCase(),
+      )
+            setProducts(response);
+     return setHaveProducts(true);
+    }
+
   const response =  await requestWebScrap(
-    searchTerm.normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s/g, '-')
-    .toLowerCase(),
-    selectedCategory.normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s/g, '-')
-    .toLowerCase(),
-    selectedPlatform
+      searchTerm.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s/g, '-')
+        .toLowerCase(),
+      selectedCategory.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s/g, '-')
+        .toLowerCase(),
+      selectedPlatform
     )
   setProducts(response)
   setHaveProducts(true);

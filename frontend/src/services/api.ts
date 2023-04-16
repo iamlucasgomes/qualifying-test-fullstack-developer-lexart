@@ -9,3 +9,9 @@ export const requestWebScrap = async (searchTerm: string, category: string, plat
   const { data } = await webScrap.post('/webscrap', dataset)
   return data;
 };
+
+export const requestAllPlatforms = async (searchTerm: string, category: string) => {
+  const dataset = { searchTerm, category};
+  const { data } = await webScrap.post('/webscrap/all', dataset)
+  return data;
+};
