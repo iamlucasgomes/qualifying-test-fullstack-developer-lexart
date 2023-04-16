@@ -14,25 +14,18 @@ export default class RequestScrapService {
     return result;
   }
 
-  private insertAdvert(advert: IAdvert): Promise<Adverts> {
+  private insertAdvert(advert: IAdvert): Promise<[Adverts, boolean]> {
     const { title, requestId, description, price, image, link, platform } = advert;
-    return this.advertModel.create({
-      title,
-      requestId,
-      description,
-      price,
-      image,
-      link,
-      platform
-    });
-  }
-
-  private insertScrap(request: IWebScrap): Promise<RequestScrap> {
-    const { searchTerm, category, platform } = request;
-    return this.requestScrapModel.create({
-      searchTerm,
-      category,
-      platform
+    return this.advertModel.findOrCreate({
+      where: {
+        title,
+        requestId,
+        description,
+        price,
+        image,
+        link,
+        platform,
+      }
     });
   }
 
