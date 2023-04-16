@@ -68,7 +68,7 @@ const SearchBar: FC<Props> = ({ categories }) => {
         onChange={(e) => setSelectedCategory((e.target.value))}
       >
         {categories.map((category) => (
-          <option key={category} value={category}>
+          <option key={category} value={category === 'TV' ? 'televisão' : category}>
             {category}
           </option>
         ))}

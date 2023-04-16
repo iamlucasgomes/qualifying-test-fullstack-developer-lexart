@@ -10,7 +10,7 @@ export default class RequestScrapService {
   protected advertModel: ModelStatic<Adverts> = Adverts;
 
 
-  public async getAllScraps(request: IGetAllScraps) {
+  public async getAllScraps(request: IGetAllScraps): Promise<RequestScrap[]> {
     const { searchTerm, category } = request;
     const result = await this.requestScrapModel.findAll({ 
       where: { searchTerm, category },
@@ -41,7 +41,7 @@ export default class RequestScrapService {
     });
   }
 
-  public async insertWebScrap(request: IWebScrap, adverts: IAdvert[]): Promise<(IWebScrap | IAdvert | RequestScrap)[]> {
+  public async insertWebScrap(request: IWebScrap, adverts: IAdvert[]): Promise<RequestScrap[]> {
     const { searchTerm, category, platform } = request;
     try {
       await this.requestScrapModel.findOrCreate({ where: { searchTerm, platform, category } })

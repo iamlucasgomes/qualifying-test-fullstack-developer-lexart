@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+// @type {import('next').NextConfig}
 const nextConfig = {
   reactStrictMode: true,
 }
@@ -6,6 +6,6 @@ const nextConfig = {
 module.exports = {
   nextConfig,
   images: {
-    domains: ["static.netshoes.com.br", "http2.mlstatic.com", "i.zst.com.br"],
+    domains: ["http2.mlstatic.com", "i.zst.com.br"],
   },
 };

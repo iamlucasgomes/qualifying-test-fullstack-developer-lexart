@@ -4,7 +4,7 @@ export default interface IAdvert {
   title: string;
   price: number;
   description: string;
-  image: string;
+  image?: string;
   link: string;
   platform: string;
 }

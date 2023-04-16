@@ -2,8 +2,7 @@ import Card from '@/components/Card'
 import Image from "next/image";
 import SearchBar from '@/components/SearchBar'
 import { useAppContext } from '@/context/hook';
-import { requestWebScrap } from '@/services/api';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export default function Main() {
   const { setSelectedCategory, products, haveProducts } = useAppContext();
