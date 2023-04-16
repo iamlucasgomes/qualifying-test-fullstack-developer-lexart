@@ -15,11 +15,12 @@ const SearchBar: FC<Props> = ({ categories }) => {
     selectedCategory,
     setSelectedCategory,
     setProducts,
-    setHaveProducts
+    setHaveProducts,
+    setIsLoading
   } = useAppContext();
 
   const handleSearch = useCallback( async () => {
-
+    setIsLoading(true)
     if(selectedPlatform === 'Todas') {
       const response = await requestAllPlatforms(
       searchTerm.normalize('NFD')
@@ -48,7 +49,8 @@ const SearchBar: FC<Props> = ({ categories }) => {
     )
   setProducts(response)
   setHaveProducts(true);
-  }, [searchTerm, selectedCategory, selectedPlatform, setHaveProducts, setProducts]);
+  setIsLoading(false);
+  }, [searchTerm, selectedCategory, selectedPlatform, setHaveProducts, setIsLoading, setProducts]);
 
   return (
     <div className="flex justify-center p-4">
@@ -68,7 +70,7 @@ const SearchBar: FC<Props> = ({ categories }) => {
         onChange={(e) => setSelectedCategory((e.target.value))}
       >
         {categories.map((category) => (
-          <option key={category} value={category === 'TV' ? 'televisão' : category}>
+          <option key={category} value={category}>
             {category}
           </option>
         ))}

@@ -11,5 +11,7 @@ export default interface MyContextData{
   products: Product[] | [];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>> | React.Dispatch<React.SetStateAction<never[]>>;
   haveProducts: boolean;
-  setHaveProducts: React.Dispatch<React.SetStateAction<boolean>>
+  setHaveProducts: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }

@@ -14,6 +14,7 @@ const [selectedPlatform, setSelectedPlatform] = useState('todas')
 const [selectedCategory, setSelectedCategory] = useState('Celular')
 const [products, setProducts] = useState([]);
 const [haveProducts, setHaveProducts] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
 
   const context: MyContextData = {
     searchTerm,
@@ -25,7 +26,9 @@ const [haveProducts, setHaveProducts] = useState(false);
     products,
     setProducts,
     haveProducts,
-    setHaveProducts
+    setHaveProducts,
+    isLoading,
+    setIsLoading,
   };
 
   return <AppContext.Provider value={context}>

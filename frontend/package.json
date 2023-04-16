@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.17",
     "@types/node": "18.15.11",
     "@types/react": "18.0.34",
     "@types/react-dom": "18.0.11",
@@ -20,8 +21,12 @@
     "postcss": "8.4.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.1",
+    "react-spinner": "^0.2.7",
+    "tailwindcss": "^3.3.1",
     "typescript": "5.0.4"
   },
-  "author": "Lucas Gomes Martins"
+  "author": "Lucas Gomes Martins",
+  "devDependencies": {
+    "@types/next": "^9.0.0"
+  }
 }
