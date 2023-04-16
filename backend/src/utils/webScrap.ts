@@ -5,11 +5,8 @@ import parseMercadoLivre from './parseMercadoLivre';
 import { endpointBuscape, endpointMercadoLivre, mercadoLivre } from './constants/consSearchProducts';
 
 export default async function searchProducts(searchTerm: string, category: string, web: string): Promise<IProduct[]> {
-
-  const mercadoLivreUrl: string = category ? `${endpointMercadoLivre}${category}/${searchTerm}`
-    : `${endpointMercadoLivre}${searchTerm}`;
-  const buscapeUrl: string = category ? `${endpointBuscape}${category}/${searchTerm}`
-    : `${endpointBuscape}search?q=${searchTerm}`;
+  const mercadoLivreUrl: string = `${endpointMercadoLivre}${category}-${searchTerm}`;
+  const buscapeUrl: string = `${endpointBuscape}${category}/${searchTerm}`;
 
   let buscapeProducts: IProduct[] = [];
   let mercadoLivreProducts: IProduct[] = [];

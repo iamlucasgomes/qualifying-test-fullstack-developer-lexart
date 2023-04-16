@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, response } from 'express';
 import searchProducts from '../utils/webScrap'
 import RequestScrapService from '../service/RequestScrap.service';
 import IProduct from '../interface/IProduct';
@@ -19,11 +19,17 @@ export default class WebScrapController {
 
   public getWebScrap = async () => {
     const { searchTerm, category, platform } = this.req.body;
-    const scrap: IProduct[] = await searchProducts(searchTerm, category, platform);
+    const exist = await this.Service.getAllScraps({ searchTerm, category, platform })
 
-    const response: RequestScrap[] = await this.Service.insertWebScrap(this.req.body, scrap)
-    Array.isArray(response) && response.length > 0
-      ? this.res.status(200).json(response[0]) : this.res.status(200).json([])
+    if (exist.length === 0) {
+      const scrap: IProduct[] = await searchProducts(searchTerm, category, platform);
+
+      const response: RequestScrap[] = await this.Service.insertWebScrap(this.req.body, scrap)
+      Array.isArray(response) && response.length > 0
+        ? this.res.status(200).json(response[0]) : this.res.status(200).json([])
+    }
+    Array.isArray(exist) && exist.length > 0
+    && this.res.status(200).json(exist[0])
   };
 
   public getAllWebScrap = async () => {

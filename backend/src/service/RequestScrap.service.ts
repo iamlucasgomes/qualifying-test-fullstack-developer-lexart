@@ -11,12 +11,19 @@ export default class RequestScrapService {
 
 
   public async getAllScraps(request: IGetAllScraps): Promise<RequestScrap[]> {
-    const { searchTerm, category } = request;
-    const result = await this.requestScrapModel.findAll({ 
+    const { searchTerm, category, platform } = request;
+
+    const result = platform === 'Buscapé' || platform === 'Mercado Livre' ? await this.requestScrapModel.findAll({
+      where: { searchTerm, category, platform },
+      include: [
+        { model: Adverts, attributes: { exclude: ['id', 'requestId'] } },
+      ],
+    }) : await this.requestScrapModel.findAll({
       where: { searchTerm, category },
       include: [
-      { model: Adverts, attributes: { exclude: ['id', 'requestId'] } },
-    ], });
+        { model: Adverts, attributes: { exclude: ['id', 'requestId'] } },
+      ],
+    });
     return result.map((item) => item.dataValues.adverts);
   }
 
