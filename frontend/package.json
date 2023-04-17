@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build:hmg": "npm run clear && npm run env:hmg next build && next export",
-    "build:prod": "npm run clear && npm run env:prod next build && next export",
+    "build:hmg": "npm run env:hmg next build && next export",
+    "build:prod": "npm run env:prod next build && next export",
     "env:hmg": "cross-env ACTIVE_ENV=development",
     "env:prod": "cross-env ACTIVE_ENV=production",
     "start": "npm run env:hmg next dev",
-    "start:prod": "npm run env:prod next start"
+    "start:prod": "npm run env:prod next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
