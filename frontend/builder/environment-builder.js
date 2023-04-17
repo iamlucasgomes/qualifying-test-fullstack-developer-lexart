@@ -1,5 +1,5 @@
 const fs = require('fs');
-const activeEnv = process.env.ACTIVE_ENV || 'development';
+const activeEnv = process.env.ACTIVE_ENV || 'env';
 
 const env = require('dotenv').config({
   path: `.env.${activeEnv}`,
