@@ -7,9 +7,7 @@ const env = require('dotenv').config({
 
 const createEnvFile = () => {
   return new Promise((resolve, reject) => {
-    fs.writeFile('environment.js',
-    `const env = ${JSON.stringify(env.parsed)}
-    export default env`, 'utf8', (error) => {
+    fs.writeFile('environment.js', `export default ${JSON.stringify(env.parsed)}`, 'utf8', (error) => {
       return error ? reject(error) : resolve();
     });
   });
