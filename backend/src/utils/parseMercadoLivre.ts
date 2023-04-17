@@ -4,16 +4,16 @@ import { descriptionClass, imageClass, linkClass, mainClass, meta, priceClass, t
 
 export default function parseMercadoLivre(html: string, category: string): IProduct[] {
 
-  const $: cheerio.CheerioAPI = cheerio.load(html);
+  const $ = cheerio.load(html);
   const products: IProduct[] = [];
   $(mainClass).each((_, element) => {
 
     const el = $(element);
-    const titleElem: cheerio.Cheerio<cheerio.Element> = el.find(titleClass);
-    const priceTextElem: cheerio.Cheerio<cheerio.Element> = el.find(priceClass).first();
-    const descriptionElem: cheerio.Cheerio<cheerio.Element> = el.find(descriptionClass);
-    const imageElem: cheerio.Cheerio<cheerio.Element> = el.find(imageClass);
-    const linkElem: cheerio.Cheerio<cheerio.Element> = el.find(linkClass);
+    const titleElem = el.find(titleClass);
+    const priceTextElem = el.find(priceClass).first();
+    const descriptionElem = el.find(descriptionClass);
+    const imageElem = el.find(imageClass);
+    const linkElem = el.find(linkClass);
 
     try {
       const title: string = titleElem.text();
