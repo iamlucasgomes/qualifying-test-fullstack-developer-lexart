@@ -7,7 +7,7 @@ const nextConfig = {
 module.exports = {
   nextConfig,
   env: {
-    DB_HOST: 'http://localhost:3001'
+    HOST
   },
   images: {
     domains: ["http2.mlstatic.com", "i.zst.com.br"],
