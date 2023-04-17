@@ -1,7 +1,7 @@
 import axios from 'axios';
-import env from '../../environment';
+const env = require('../../environment');
 
-const API_URL = env.HOST;
+const API_URL: string | undefined = env.HOST || 'localhost';
 
 const webScrap = axios.create({
   baseURL: API_URL,
