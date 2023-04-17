@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build:hmg": "npm run clear && npm run env:hmg next build && next export",
+    "build:prod": "npm run clear && npm run env:prod next build && next export",
+    "env:hmg": "cross-env ACTIVE_ENV=development",
+    "env:prod": "cross-env ACTIVE_ENV=production",
+    "start": "npm run env:hmg next dev",
+    "start:prod": "npm run env:prod next start"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
@@ -27,6 +29,8 @@
   },
   "author": "Lucas Gomes Martins",
   "devDependencies": {
-    "@types/next": "^9.0.0"
+    "@types/next": "^9.0.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3"
   }
 }
