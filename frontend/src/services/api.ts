@@ -1,20 +1,20 @@
 import axios from 'axios';
-const env = require('../../environment');
+import ennv from '../../environment'
 
-const API_URL: string | undefined = env.BACKEND || 'localhost';
-console.log(API_URL)
+const BACKEND: string  = ennv.BACKEND;
+
 const webScrap = axios.create({
-  baseURL: API_URL,
+  baseURL: BACKEND,
 });
 
 export const requestWebScrap = async (searchTerm: string, category: string, platform: string) => {
-  const dataset = { searchTerm, category, platform };
+  const dataset = { searchTerm, category, platform};
   const { data } = await webScrap.post('/webscrap', dataset)
   return data;
 };
 
 export const requestAllPlatforms = async (searchTerm: string, category: string) => {
-  const dataset = { searchTerm, category };
+  const dataset = { searchTerm, category};
   const { data } = await webScrap.post('/webscrap/all', dataset)
   return data;
 };
