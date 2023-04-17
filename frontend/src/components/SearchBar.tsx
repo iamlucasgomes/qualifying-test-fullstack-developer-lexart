@@ -19,24 +19,25 @@ const SearchBar: FC<Props> = ({ categories }) => {
     setIsLoading
   } = useAppContext();
 
-  const handleSearch = useCallback( async () => {
+  const handleSearch = useCallback(async () => {
     setIsLoading(true)
-    if(selectedPlatform === 'Todas') {
+    if (selectedPlatform === 'Todas') {
       const response = await requestAllPlatforms(
-      searchTerm.normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/\s/g, '-')
-        .toLowerCase(),
-      selectedCategory.normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/\s/g, '-')
-        .toLowerCase(),
+        searchTerm.normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/\s/g, '-')
+          .toLowerCase(),
+        selectedCategory.normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/\s/g, '-')
+          .toLowerCase(),
       )
-            setProducts(response);
-     return setHaveProducts(true);
+      setProducts(response);
+      setHaveProducts(true);
+      return setIsLoading(false);
     }
 
-  const response =  await requestWebScrap(
+    const response = await requestWebScrap(
       searchTerm.normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/\s/g, '-')
@@ -47,9 +48,9 @@ const SearchBar: FC<Props> = ({ categories }) => {
         .toLowerCase(),
       selectedPlatform
     )
-  setProducts(response)
-  setHaveProducts(true);
-  setIsLoading(false);
+    setProducts(response)
+    setHaveProducts(true);
+    setIsLoading(false);
   }, [searchTerm, selectedCategory, selectedPlatform, setHaveProducts, setIsLoading, setProducts]);
 
   return (

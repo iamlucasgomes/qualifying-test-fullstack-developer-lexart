@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_URL = process.env.DB_HOST
+
 const webScrap = axios.create({
-  baseURL: 'http://localhost:3001/',
+  baseURL: API_URL,
 });
 
 export const requestWebScrap = async (searchTerm: string, category: string, platform: string) => {
