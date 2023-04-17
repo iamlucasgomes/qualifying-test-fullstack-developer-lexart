@@ -4,7 +4,7 @@ import { mainClass, descriptionClass, imageClass, linkClass, meta, priceClass, t
 
 export default function parseBuscape(html: string, category: string): IProduct[] {
 
-  const $: cheerio.CheerioAPI = cheerio.load(html);
+  const $ = cheerio.load(html);
   const products: IProduct[] = [];
   const web: string = 'https://www.buscape.com.br';
 
@@ -12,12 +12,12 @@ export default function parseBuscape(html: string, category: string): IProduct[]
 
     const el = $(element);
 
-    const titleEl: cheerio.Cheerio<cheerio.Element> = el.find(titleClass);
-    const priceTextEl: cheerio.Cheerio<cheerio.Element> = el.find(priceClass);
-    const descriptionEl: cheerio.Cheerio<cheerio.Element> = el.find(descriptionClass);
-    const imageElem: cheerio.Cheerio<cheerio.Element> = el.find(imageClass);
-    const linkElem: cheerio.Cheerio<cheerio.Element> = el.find(linkClass);
-    const metaSiteName: cheerio.Cheerio<cheerio.AnyNode> = $(meta);
+    const titleEl = el.find(titleClass);
+    const priceTextEl = el.find(priceClass);
+    const descriptionEl = el.find(descriptionClass);
+    const imageElem = el.find(imageClass);
+    const linkElem = el.find(linkClass);
+    const metaSiteName = $(meta);
 
     try {
       const title: string = titleEl.text();
