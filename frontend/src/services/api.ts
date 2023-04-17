@@ -1,7 +1,7 @@
 import axios from 'axios';
 import ennv from '../../environment'
 
-const BACKEND = process.env.BACKEND;
+const BACKEND: string  = ennv.BACKEND;
 
 const webScrap = axios.create({
   baseURL: BACKEND,
