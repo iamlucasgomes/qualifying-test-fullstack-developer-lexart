@@ -1,6 +1,7 @@
 import axios from 'axios';
+import environment from '../../environment';
 
-const API_URL = process.env.HOST
+const API_URL = environment.HOST;
 
 const webScrap = axios.create({
   baseURL: API_URL,
