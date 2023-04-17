@@ -2,11 +2,11 @@ import 'dotenv/config';
 import { Options } from 'sequelize';
 
 const config: Options = {
-  username: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: 'WebScrap Lexart',
-  host: process.env.MYSQL_HOST,
-  port: Number(process.env.MYSQL_PORT),
+  username: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  host: process.env.MYSQLHOST,
+  port: Number(process.env.MYSQLPORT),
   dialect: 'mysql',
   dialectOptions: {
     timezone: 'Z',
